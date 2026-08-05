@@ -19,8 +19,14 @@ var w = window,
   yWindow = w.innerHeight|| e.clientHeight|| g.clientHeight;
 
 var margin = {top: 0, right: 10, bottom: 60, left: 10},
-  width = (xWindow - margin.left - margin.right),
-  height = Math.floor(yWindow * 0.43) - margin.top - margin.bottom - 30;
+  width = xWindow - margin.left - margin.right,
+  height = Math.max(
+    320,
+    Math.floor(yWindow * 0.58) -
+      margin.top -
+      margin.bottom -
+      20
+  );
 
 // max length of string in boxes
 // Doughnut-chart label limit
