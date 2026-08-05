@@ -23,7 +23,16 @@ var margin = {top: 0, right: 10, bottom: 60, left: 10},
   height = Math.floor(yWindow * 0.43) - margin.top - margin.bottom - 30;
 
 // max length of string in boxes
+// Doughnut-chart label limit
 var cutoffStrings = 12;
+
+// Responsive Sankey node width and label settings
+var nodeBoxWidth = Math.min(width / 7, 140);
+var nodeLabelCutoff = Math.max(
+  12,
+  Math.floor(nodeBoxWidth / 5.5)
+);
+var minNodeLabelHeight = 9;
 
 var formatNumber = d3.format(",.0f"),  // zero decimal places
   format = function(d) {
@@ -40,7 +49,7 @@ var svg = d3.select("#chart").append("svg")
 
 // Set the sankey diagram properties
 var sankey = d3.sankey()
-  .nodeWidth((function() {return Math.min(width / 10, 90)})())
+  .nodeWidth(nodeBoxWidth)
   .nodePadding(0)
   .size([width, height]);
 
@@ -531,22 +540,37 @@ function addNodes() {
 
   // add node text
   node.append("text")
-    .attr("class", "nodeTitle")
-    .attr("x", 2)
-    .attr("y", function(d) {if (d.dy <= 12) {return 6} else {return 8}})
-    .attr("dy", ".35em")
-    .attr("text-anchor", "start")
-    .attr("fill", "black")
-    .text(function(d) {
-      if (d.dy > 12) {
-        if (d.name.length <= cutoffStrings) {
-          return d.name
-        }
-        else {
-          return d.name.slice(0,cutoffStrings-1) + '.'
-        }
+  .attr("class", "nodeTitle")
+  .attr("x", 2)
+  .attr("y", function(d) {
+    if (d.dy <= 12) {
+      return 6;
+    } else {
+      return 8;
+    }
+  })
+  .attr("dy", ".35em")
+  .attr("text-anchor", "start")
+  .attr("fill", "black")
+  .style("font-size", function(d) {
+    if (d.dy <= 12) {
+      return "9px";
+    } else {
+      return "10px";
+    }
+  })
+  .text(function(d) {
+    if (d.dy > minNodeLabelHeight) {
+      if (d.name.length <= nodeLabelCutoff) {
+        return d.name;
+      } else {
+        return d.name.slice(
+          0,
+          nodeLabelCutoff - 1
+        ) + ".";
       }
-    });
+    }
+  });
 
   // add the rectangles for the nodes
   node.append("rect")
