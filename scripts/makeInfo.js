@@ -1,8 +1,10 @@
-var inf = d3.select("#info").append("svg")
-  .attr("width", function() {return 0.49 * xWindow})
-  .attr("height", function() {return 0.49 * yWindow});
+var radius = Math.min(yWindow * 0.10, 110);
+var infoCenterY = radius + 24;
+var infoSvgHeight = infoCenterY + radius + 24;
 
-var radius = Math.min(yWindow * 0.135, 300);
+var inf = d3.select("#info").append("svg")
+  .attr("width", 0.49 * xWindow)
+  .attr("height", infoSvgHeight);
 
 var arc = d3.svg.arc()
     .outerRadius(radius - 5)
@@ -19,12 +21,12 @@ inf.append("circle")
   .attr("cx", 0)
   .attr("cy", 0)
   .attr("r", function() {return radius})
-  .attr("transform", function() {return "translate(" + (xWindow * 0.10) + "," + (yWindow * 0.25) + ")"})
+  .attr("transform", function() {return "translate(" + (xWindow * 0.10) + "," + (infoCenterY) + ")"})
   .style("stroke", "black")
   .style("fill", "beige")
 
 inf.append("text")
-  .attr("transform", function() {return "translate(" + (xWindow * 0.10) + "," + (yWindow * 0.25 + 10) + ")"})
+  .attr("transform", function() {return "translate(" + (xWindow * 0.10) + "," + (infoCenterY + 10) + ")"})
   .attr("text-anchor", "middle")
   .text("FROM")
   .style("font-size", "20px")
@@ -34,12 +36,12 @@ inf.append("circle")
   .attr("cx", 0)
   .attr("cy", 0)
   .attr("r", function() {return radius})
-  .attr("transform", function() {return "translate(" + (xWindow * 0.40) + "," + (yWindow * 0.25) + ")"})
+  .attr("transform", function() {return "translate(" + (xWindow * 0.40) + "," + (infoCenterY) + ")"})
   .style("stroke", "black")
   .style("fill", "beige")
 
 inf.append("text")
-  .attr("transform", function() {return "translate(" + (xWindow * 0.40) + "," + (yWindow * 0.25 + 10) + ")"})
+  .attr("transform", function() {return "translate(" + (xWindow * 0.40) + "," + (infoCenterY + 10) + ")"})
   .attr("text-anchor", "middle")
   .text("TO")
   .style("font-size", "20px")
@@ -50,12 +52,12 @@ inf.append("circle")
   .attr("cx", 0)
   .attr("cy", 0)
   .attr("r", function() {return radius})
-  .attr("transform", function() {return "translate(" + (xWindow * 0.25) + "," + (yWindow * 0.25) + ")"})
+  .attr("transform", function() {return "translate(" + (xWindow * 0.25) + "," + (infoCenterY) + ")"})
   .style("stroke", "black")
   .style("fill", "beige")
 
 inf.append("text")
-  .attr("transform", function() {return "translate(" + (xWindow * 0.25) + "," + (yWindow * 0.25 + 10) + ")"})
+  .attr("transform", function() {return "translate(" + (xWindow * 0.25) + "," + (infoCenterY + 10) + ")"})
   .attr("text-anchor", "middle")
   .text("VIA")
   .style("font-size", "20px")
@@ -75,7 +77,7 @@ function bakePies(d) {
   // draw title
   inf.append("text")
     .attr("class", "nodeTitleInfo")
-    .attr("transform", function() {return "translate(" + (xWindow * 0.25) + "," + (yWindow * 0.05) + ")"})
+    .attr("transform", function() {return "translate(" + (xWindow * 0.25) + "," + (18) + ")"})
     .attr("text-anchor", "middle")
     .text(function() {if (d.hasOwnProperty("F500")) {return d.name + ' (' + d.type + ') - ' + 'Forest 500 rank = ' + d.F500} else {return d.name + ' (' + d.type + ')'}})
     .style("font-size", "20px")
@@ -153,7 +155,7 @@ function bakePies(d) {
   from.append("path")
     .attr("class","slice1")
     .attr("d", arc)
-    .attr("transform", function() {return "translate(" + (xWindow * 0.10) + "," + (yWindow * 0.25) + ")"})
+    .attr("transform", function() {return "translate(" + (xWindow * 0.10) + "," + (infoCenterY) + ")"})
     .attr("title", function(d) {return d.data[0] + ' ' + formatNumber(100 * (d.endAngle - d.startAngle) / 6.28) + '%'})
     .style("stroke", "black")
     .style("stroke-width", 0.5)
@@ -178,7 +180,7 @@ function bakePies(d) {
   to.append("path")
     .attr("class","slice2")
     .attr("d", arc)
-    .attr("transform", function() {return "translate(" + (xWindow * 0.40) + "," + (yWindow * 0.25) + ")"})
+    .attr("transform", function() {return "translate(" + (xWindow * 0.40) + "," + (infoCenterY) + ")"})
     .attr("title", function(d) {return d.data[0] + ' ' + formatNumber(100 * (d.endAngle - d.startAngle) / 6.28) + '%'})
     .style("stroke", "black")
     .style("stroke-width", 0.5)
@@ -196,7 +198,7 @@ function bakePies(d) {
     })
 
   from.append("text")
-    .attr("transform", function(d) { return "translate(" + (arc.centroid(d)[0] + xWindow * 0.10) + "," + (arc.centroid(d)[1] + yWindow * 0.25) + ")" })
+    .attr("transform", function(d) { return "translate(" + (arc.centroid(d)[0] + xWindow * 0.10) + "," + (arc.centroid(d)[1] + infoCenterY) + ")" })
     .attr("dy", ".35em")
     .style("text-anchor", "middle")
     .text(function(d) {
@@ -211,7 +213,7 @@ function bakePies(d) {
     });
 
   to.append("text")
-    .attr("transform", function(d) {return "translate(" + (arc.centroid(d)[0] + xWindow * 0.40) + "," + (arc.centroid(d)[1] + yWindow * 0.25) + ")"; })
+    .attr("transform", function(d) {return "translate(" + (arc.centroid(d)[0] + xWindow * 0.40) + "," + (arc.centroid(d)[1] + infoCenterY) + ")"; })
     .attr("dy", ".35em")
     .style("text-anchor", "middle")
     .text(function(d) {
@@ -235,7 +237,7 @@ function bakePies(d) {
   via.append("path")
     .attr("class","slice3")
     .attr("d", arc)
-    .attr("transform", function() {return "translate(" + (xWindow * 0.25) + "," + (yWindow * 0.25) + ")"})
+    .attr("transform", function() {return "translate(" + (xWindow * 0.25) + "," + (infoCenterY) + ")"})
     .attr("title", function(d) {return d.data[0] + ' ' + formatNumber(100 * (d.endAngle - d.startAngle) / 6.28) + '%'})
     .style("stroke", "black")
     .style("stroke-width", 0.5)
@@ -253,7 +255,7 @@ function bakePies(d) {
     })
 
   via.append("text")
-    .attr("transform", function(d) {return "translate(" + (arc.centroid(d)[0] + xWindow * 0.25) + "," + (arc.centroid(d)[1] + yWindow * 0.25) + ")"; })
+    .attr("transform", function(d) {return "translate(" + (arc.centroid(d)[0] + xWindow * 0.25) + "," + (arc.centroid(d)[1] + infoCenterY) + ")"; })
     .attr("dy", ".35em")
     .style("text-anchor", "middle")
     .text(function(d) {
