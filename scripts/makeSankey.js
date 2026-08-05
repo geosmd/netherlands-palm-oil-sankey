@@ -40,6 +40,13 @@ var nodeLabelCutoff = Math.max(
 );
 var minNodeLabelHeight = 9;
 
+// Always display every actor in these layers.
+// Small actors remain visible as thin bordered nodes.
+var alwaysShowIndividualTypes = [
+  "Importer group",
+  "Refinery"
+];
+
 var formatNumber = d3.format(",.0f"),  // zero decimal places
   format = function(d) {
     return formatNumber(d) + " " + units
@@ -395,7 +402,10 @@ function updateSankey() {
   for (i = subNodes.length - 1; i >= 0 ; i--) {
     var d = subNodes[i];
     if (c == d['x']) {
-      if (n < 8 && d['dy'] > 4) {
+      if (
+        alwaysShowIndividualTypes.indexOf(d["type"]) !== -1 ||
+        (n < 8 && d["dy"] > 4)
+      ) {
         dictOthers[d['name']] = d
         newNodes.push(d)
         t = d['type']
