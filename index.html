@@ -1,40 +1,115 @@
-<html>
-  <head>
-    <title>SEI - Supply Chain Visualization</title>
-    <link rel="stylesheet" type="text/css" href="css/platform_style.css">
-    <script src="https://d3js.org/d3.v3.js"></script>
-    <script src="scripts/sankey.js"></script>
-  </head>
-  <body>
-    <div id="options">
-      <input name="resetButton" 
-             type="button" 
-             value="Reset" 
-             onclick="reset()" />
-      <select id="ddl" onchange="rescale()">
-        <option value=0 selected="selected">Quantity1 (Unit1)</option>
-        <option value=1>Quantity2 (unit2)</option>
-      </select>
-      <input name="subsetButton" 
-             type="button" 
-             value="Zoom into selected nodes" 
-             onclick="subset()" />
-      <input name="excludeButton" 
-             type="button" 
-             value="Exclude selected nodes" 
-             onclick="exclude()" />
-      <input name="subsetLayerButton"
-             type="button" 
-             value="Select layers" 
-             onclick="subsetLayerSankey()" />
-      <select id="ddlNode" onchange="selectNode()">
-        <option value=0  selected="selected">Select node by name</option>
-      </select>
-    </div>
-    <div id="chart"></div>
-    <div id="info"></div>
-    <script>var file = "data/data.json"</script>
-    <script src="scripts/makeSankey.js"></script>
-    <script src="scripts/makeInfo.js"></script>		
-  </body>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
+
+  <title>Netherlands Palm Oil Supply Chains</title>
+
+  <link
+    rel="stylesheet"
+    type="text/css"
+    href="css/platform_style.css"
+  >
+
+  <script src="https://d3js.org/d3.v3.js"></script>
+  <script src="scripts/sankey.js"></script>
+</head>
+
+<body>
+
+  <div style="font-family: Arial, sans-serif; margin: 12px 10px 6px;">
+    <h1 style="font-size: 24px; margin: 0 0 6px;">
+      Allocation of Palm Oil Flows through the Netherlands
+    </h1>
+
+    <p style="font-size: 14px; margin: 0 0 4px;">
+      Interactive pathways from Indonesian production regions to
+      Dutch refineries and downstream users.
+    </p>
+
+    <p style="font-size: 12px; color: #555; margin: 0;">
+      Flows represent modelled allocations and do not necessarily
+      constitute directly observed transactions between every pair
+      of adjacent nodes.
+    </p>
+  </div>
+
+  <div id="options">
+
+    <input
+      name="resetButton"
+      type="button"
+      value="Reset"
+      onclick="reset()"
+    >
+
+    <select id="ddl" onchange="rescale()">
+      <option value="0" selected="selected">
+        Allocated volume (t)
+      </option>
+    </select>
+
+    <input
+      name="subsetButton"
+      type="button"
+      value="Zoom into selected nodes"
+      onclick="subset()"
+    >
+
+    <input
+      name="excludeButton"
+      type="button"
+      value="Exclude selected nodes"
+      onclick="exclude()"
+    >
+
+    <input
+      name="subsetLayerButton"
+      type="button"
+      value="Select layers"
+      onclick="subsetLayerSankey()"
+    >
+
+    <select id="ddlNode" onchange="selectNode()">
+      <option value="0" selected="selected">
+        Select node by name
+      </option>
+    </select>
+
+  </div>
+
+  <div id="chart"></div>
+  <div id="info"></div>
+
+  <script>
+    var file = "data/data.json";
+  </script>
+
+  <script src="scripts/makeSankey.js"></script>
+  <script src="scripts/makeInfo.js"></script>
+
+  <div
+    style="
+      font-family: Arial, sans-serif;
+      font-size: 11px;
+      color: #666;
+      margin: 12px 10px;
+    "
+  >
+    Visualization software adapted from the
+    <a
+      href="https://github.com/sei-international/supply-chain-visualization"
+      target="_blank"
+    >
+      SEI supply-chain visualization
+    </a>.
+  </div>
+
+</body>
+
 </html>
