@@ -75,13 +75,6 @@ function bakePies(d) {
   d3.selectAll(".slice3").remove()
 
   // draw title
-  inf.append("text")
-    .attr("class", "nodeTitleInfo")
-    .attr("transform", function() {return "translate(" + (xWindow * 0.25) + "," + (18) + ")"})
-    .attr("text-anchor", "middle")
-    .text(function() {if (d.hasOwnProperty("F500")) {return d.name + ' (' + d.type + ') - ' + 'Forest 500 rank = ' + d.F500} else {return d.name + ' (' + d.type + ')'}})
-    .style("font-size", "20px")
-
   var orig = {};
   var through = {};
   var dest = {};
